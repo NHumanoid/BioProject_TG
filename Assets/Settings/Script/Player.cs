@@ -5,7 +5,9 @@ namespace TanMak
     public class Player : MonoBehaviour
     {
         [SerializeField]
-         private float speed = 5f; //플레이어의 이동 속도를 설정합니다.
+        private float speed = 5f; //플레이어의 이동 속도를 설정합니다.
+        [SerializeField]
+        private GameObject playerBullet; //총알을 설정합니다.
 
         #region Touch
         //위에 트리거에 닿으면 true로 설정하여 이동을 제한합니다.
@@ -24,6 +26,19 @@ namespace TanMak
 
         private void Update()
         {
+            move(); //이동을 합니다.
+            Fire(); //총알을 발사합니다.
+        }
+
+        private void Fire() 
+        {
+            GameObject bullet  = Instantiate(playerBullet,transform.position,transform.rotation);
+            Rigidbody2D rigid = playerBullet.GetComponent<Rigidbody2D>();
+            rigid.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //총알을 발사합니다.
+        }
+
+        private void move() 
+        {
             float h = Input.GetAxisRaw("Horizontal"); //좌우로 이동을 합니다.
             if ((isTouchRight && h == 1) || (isTouchLeft && h == -1)) { h = 0f; } //좌우로 이동을 제한합니다.
 
@@ -34,13 +49,11 @@ namespace TanMak
             Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime; //이동할 방향을 설정합니다.
 
             this.transform.position = curPos + nextPos; //현재 위치에 이동할 방향을 더합니다.
-
             if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
             {
                 anim.GetInteger("input");
             }
         }
-
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.tag == "Border") 
