@@ -36,9 +36,14 @@ namespace TanMak
         void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.tag == "Border") { Destroy(gameObject); }
-            else if (collision.gameObject.tag == "Player") { Bullet bullet = collision.gameObject.GetComponent<Bullet>(); }
-            OnHit(bullet.dmg);
+            else if (collision.gameObject.tag == "PlayerBullet") 
+            { 
+                Bullet bullet = collision.gameObject.GetComponent<Bullet>();
+                OnHit(bullet.dmg);
+
+                Destroy(collision.gameObject);
+            }
+            
         }
     }
-
 }
