@@ -78,11 +78,11 @@ MonoBehaviour:
     instantiationMode: 0
   - dependency: {fileID: 7400000, guid: 90c55689a6bb6c549a2bd696b235d945, type: 2}
     instantiationMode: 0
-  - dependency: {fileID: 5612941092933756379, guid: 54dcc9578f6bfaa409063347ff0f9c3a, type: 3}
-    instantiationMode: 0
   - dependency: {fileID: 2800000, guid: 8b0e3c3a453d8684ebb5d9d51f6bf15a, type: 3}
     instantiationMode: 0
   - dependency: {fileID: 2800000, guid: 1a3fdf316825bf04798d833b2fd4b3e4, type: 3}
+    instantiationMode: 0
+  - dependency: {fileID: 5266644753474897105, guid: 390926c4c8fc28d44a1449b269f883b0, type: 3}
     instantiationMode: 0
   - dependency: {fileID: 7400000, guid: cfdba3e25b674224fad75fcf8dff2e3e, type: 2}
     instantiationMode: 0
