@@ -5,6 +5,7 @@ namespace TanMak
 {
     public class Player : MonoBehaviour
     {
+        #region Variables
         [SerializeField]
         private float speed = 5f; //플레이어의 이동 속도를 설정합니다.
         [SerializeField]
@@ -15,6 +16,7 @@ namespace TanMak
         private GameObject playerBullet; //총알을 설정합니다.
         [SerializeField]
         private float maxShotDelay ; //최대 발사 속도를 설정합니다.
+        #endregion
 
         #region Touch
         //위에 트리거에 닿으면 true로 설정하여 이동을 제한합니다.
@@ -24,7 +26,7 @@ namespace TanMak
         private bool isTouchRight;
         #endregion
 
-        Animator anim;
+        private Animator anim;
 
         private void Awake()
         {
@@ -42,8 +44,14 @@ namespace TanMak
         private void Fire() 
         {
 
-            if (Input.GetButton("Fire1")) { Instantiate(playerBullet); } //Fire1 버튼을 눌렀을 때
-            //if (curShotDelay < maxShotDelay) { return; } //발사 속도를 설정합니다.
+            if (!Input.GetButton("Fire1"))
+            {
+                return;
+            } 
+            if (curShotDelay < maxShotDelay)
+            {
+                return;  //발사 속도를 설정합니다.
+            }
 
             switch (power)
             {
@@ -53,7 +61,6 @@ namespace TanMak
                     rigid.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //총알을 발사합니다.
                     
                     curShotDelay = 0f; //발사 속도를 초기화합니다.
-                    Destroy(playerBullet, 1f); //총알을 2초 후에 파괴합니다.
                     break;
                 case 2:
                     GameObject bulletL = Instantiate(playerBullet, transform.position + Vector3.left * 0.25f, transform.rotation);
@@ -64,13 +71,9 @@ namespace TanMak
                     rigidL.AddForce(Vector2.up * 10f, ForceMode2D.Impulse); //총알을 발사합니다.
 
                     curShotDelay = 0f; //발사 속도를 초기화합니다.
-                    Destroy(playerBullet, 1f); //총알을 2초 후에 파괴합니다.
                     break;
-
-                    
             }
-            curShotDelay = 0f; //발사 속도를 초기화합니다.
-            Destroy(playerBullet, 1f); //총알을 2초 후에 파괴합니다.
+            
         }
 
         private void Move() 
@@ -105,51 +108,5 @@ namespace TanMak
             if (pos.y > 1f) pos.y = 1f;
             transform.position = Camera.main.ViewportToWorldPoint(pos);
         }
-        #region Trigger
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.gameObject.tag == "Border") 
-            {
-                switch (collision.gameObject.name)
-                {
-                    case "Top":
-                        isTouchTop = true;
-                        break;
-                    case "Bottom":
-                        isTouchBottom = true;
-                        break;
-                    case "Left":
-                        isTouchLeft = true;
-                        break;
-                    case "Right":
-                        isTouchRight = true;
-                        break;
-                }
-            }
-        }
-
-
-        private void OnTriggerExit2D(Collider2D collision)
-        {
-            if (collision.gameObject.tag == "Border")
-            {
-                switch (collision.gameObject.name)
-                {
-                    case "Top":
-                        isTouchTop = false;
-                        break;
-                    case "Bottom":
-                        isTouchBottom = false;
-                        break;
-                    case "Left":
-                        isTouchLeft = false;
-                        break;
-                    case "Right":
-                        isTouchRight = false;
-                        break;
-                }
-            }
-        }
-        #endregion
     }
 }
