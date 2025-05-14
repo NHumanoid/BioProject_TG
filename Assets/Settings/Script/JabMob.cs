@@ -10,6 +10,14 @@ namespace TanMak
         public Sprite[] sprites;
 
         SpriteRenderer spriteRenderer;
+        Rigidbody2D rigid;
+
+        private void Awake()
+        {
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            rigid = GetComponent<Rigidbody2D>();
+            rigid.linearVelocity = Vector2.down * speed;
+        }
 
         public void OnHit(int dmg)
         {
@@ -28,7 +36,6 @@ namespace TanMak
         void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.gameObject.tag == "Border") { Destroy(gameObject); }
-
             else if (collision.gameObject.tag == "PlayerBullet") 
             { 
                 Bullet bullet = collision.gameObject.GetComponent<Bullet>();

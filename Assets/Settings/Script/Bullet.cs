@@ -15,10 +15,6 @@ namespace TanMak
             {
                 Destroy(gameObject);
             }
-            /*if (collision.gameObject.tag == "JabMob")
-            {
-                Destroy(gameObject);
-            }*/
         }
     }
 }
