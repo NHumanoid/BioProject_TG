@@ -15,6 +15,12 @@ namespace TanMak
             {
                 Destroy(gameObject);
             }
+            if (collision.gameObject.tag == "JabMob")
+            {
+                JabMob jabMob = collision.gameObject.GetComponent<JabMob>();
+                jabMob.OnHit(dmg);
+                Destroy(gameObject);
+            }
         }
     }
 }

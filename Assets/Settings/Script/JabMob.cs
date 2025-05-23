@@ -25,7 +25,7 @@ namespace TanMak
             Invoke("ReturnSprite", 0.1f);
 
             health -= dmg;
-            if (health <= 0) { Destroy(gameObject); }
+            if (health <= 0) { Destroy(this.gameObject); }
         }
 
         void ReturnSprite()
@@ -35,8 +35,11 @@ namespace TanMak
 
         void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.tag == "Border") { Destroy(gameObject); }
-            else if (collision.gameObject.tag == "PlayerBullet") 
+            if (collision.gameObject.tag == "Border")
+            {
+                Destroy(collision.gameObject); 
+            }
+            if (collision.gameObject.tag == "PlayerBullet") 
             { 
                 Bullet bullet = collision.gameObject.GetComponent<Bullet>();
                 OnHit(bullet.dmg);

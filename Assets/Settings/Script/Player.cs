@@ -18,6 +18,9 @@ namespace TanMak
         private float maxShotDelay ; //최대 발사 속도를 설정합니다.
         #endregion
 
+        private float h; //좌우 이동을 설정합니다.
+        private float v; //상하 이동을 설정합니다.
+
         #region Touch
         //위에 트리거에 닿으면 true로 설정하여 이동을 제한합니다.
         private bool isTouchTop;
@@ -39,6 +42,7 @@ namespace TanMak
             Fire(); //총알을 발사합니다.
             Move(); //이동을 합니다.
             Reload(); //발사 속도를 설정합니다.
+            AnimationSystem(); //애니메이션을 설정합니다.
         }
 
         private void Fire() 
@@ -78,20 +82,23 @@ namespace TanMak
 
         private void Move() 
         {
-            float h = Input.GetAxisRaw("Horizontal"); //좌우로 이동을 합니다.
-            if ((isTouchRight && h == 1) || (isTouchLeft && h == -1)) { h = 0f; } //좌우로 이동을 제한합니다.
+            h = Input.GetAxisRaw("Horizontal"); //좌우로 이동을 합니다.
+            //if ((isTouchRight && h == 1) || (isTouchLeft && h == -1)) { h = 0f; } //좌우로 이동을 제한합니다.
 
-            float v = Input.GetAxisRaw("Vertical"); //상하로 이동을 합니다.
-            if ((isTouchTop && v == 1) || (isTouchBottom && v == -1)) { v = 0f; } //좌우로 이동을 제한합니다.
+            v = Input.GetAxisRaw("Vertical"); //상하로 이동을 합니다.
+            //if ((isTouchTop && v == 1) || (isTouchBottom && v == -1)) { v = 0f; } //좌우로 이동을 제한합니다.
 
             Vector3 curPos = this.transform.position; //현재 위치를 가져옵니다.
             Vector3 nextPos = new Vector3(h, v, 0) * speed * Time.deltaTime; //이동할 방향을 설정합니다.
 
             this.transform.position = curPos + nextPos; //현재 위치에 이동할 방향을 더합니다.
-            /*if (Input.GetButtonDown("Horizontal") || Input.GetButtonUp("Horizontal"))
-            {
-                anim.GetInteger("input");
-            }*/
+        }
+
+        void AnimationSystem()
+        {
+            if (h == 1) { anim.SetInteger("Input", 1); }
+            else if (h == -1) { anim.SetInteger("Input", -1); }
+            else { anim.SetInteger("Input", 0); }
         }
 
         void Reload() 
